@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>blockly_events</title>
+	<script src="blockly_compressed.js"></script>
+	<script src="blocks_compressed.js"></script>
+	<script src="msg/js/en.js"></script>
+</head>
+<body>
+	<div id="blocklyDiv" style="width: 800px;height: 800px;"></div>
+	<xml id="toolbox" style="display:none">
+			<block type="logic_boolean" disabled="true"></block>
+
+		<label text="my_label" web-class="myLabelStyle"></label>
+
+	  	<label text="your_label"></label>
+
+	  	<block type="math_number">
+	  	  <field name="NUM">42</field>
+	  	</block>
+
+		<sep gap="40"></sep>
+
+	  	<block type="controls_for">
+	  	  <value name="FROM">
+	  	    <block type="math_number">
+	  	      <field name="NUM">1</field>
+	  	    </block>
+	  	  </value>
+	  	  <value name="TO">
+	  	    <block type="math_number">
+	  	      <field name="NUM">10</field>
+	  	    </block>
+	  	  </value>
+	  	  <value name="BY">
+	  	    <block type="math_number">
+	  	      <field name="NUM">1</field>
+	  	    </block>
+	  	  </value>
+	  	</block>
+
+	  	<block type="math_arithmetic">
+	  	  <field name="OP">ADD</field>
+	  	  <value name="A">
+	  	    <shadow type="math_number">
+	  	      <field name="NUM">1</field>
+	  	    </shadow>
+	  	  </value>
+	  	  <value name="B">
+	  	    <shadow type="math_number">
+	  	      <field name="NUM">1</field>
+	  	    </shadow>
+	  	  </value>
+	  	</block>
+	</xml>
+</body>
+<script>
+	var workspace = Blockly.inject("blocklyDiv",
+		{
+			toolbox: document.getElementById("toolbox"),
+			trashcan: true,
+	});
+	function func(event){
+		console.group("======>");
+		console.log(event.type);
+		console.log(event.workspaceId);
+		console.log(workspace.getBlockById(event.blockId));
+		console.log(event.group);
+	}
+	workspace.addChangeListener(func);
+</script>
+</html>

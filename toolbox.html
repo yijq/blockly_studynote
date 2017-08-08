@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>toolbox</title>
+	<script src="blockly_compressed.js"></script>
+	<script src="blocks_compressed.js"></script>
+	<script src="msg/js/en.js"></script>
+</head>
+<body>
+	<div id="blocklyDiv" style="width: 500px;height: 500px"></div>
+	<!-- <xml id="toolbox" style="display: none;">
+		<block type="controls_if"></block>
+	  	<block type="controls_whileUntil"></block>
+		<block type="my_block"></block>
+	</xml> -->
+</body>
+<script>
+	var toolbox = "<xml>";
+	toolbox += "<category name='logic' colour='50'>"
+	toolbox += "<block type='controls_if'></block>";
+	toolbox += "<block type='controls_whileUntil'></block>";
+	toolbox += "</category>"
+	toolbox += "<category name='my_block' colour='80'>"
+	toolbox += "<block type='my_block'></block>";
+	toolbox += "</category>"
+	toolbox += "<category name='Variables' custom='VARIABLE'></category>"
+	toolbox += "<category name='Functions' custom='PROCEDURE'></category>"
+	toolbox += "<category name='Colours' custom='COLOUR_PALETTE'></category>"
+	toolbox += "</xml>";
+
+
+
+
+	Blockly.Blocks["my_block"] = {
+		init: function(){
+			this.jsonInit({
+				"message0": "my_block %1",
+				"args0": [{
+					"type": "input_value",
+					"name": "VALUE",
+					"check": "String",
+				}],
+				"output": "Number",
+				"colour": 50,
+				"tooltip": "Returns number of letters in the provided text.",
+				"helpUrl": "http://www.w3schools.com/jsref/jsref_length_string.asp"
+			});
+		}
+		// init: function(){
+		// 	this.jsonInit({
+		// 		 "message0": 'length of %1',
+		// 		 "args0": [
+		// 		   {
+		// 		     "type": "input_value",
+		// 		     "name": "VALUE",
+		// 		     "check": "String"
+		// 		   }
+		// 		 ],
+		// 		 "output": "Number",
+		// 		 "colour": 20,
+		// 		 "tooltip": "Returns number of letters in the provided text.",
+		// 		 "helpUrl": "http://www.w3schools.com/jsref/jsref_length_string.asp"
+		// 	});
+		// }
+	};
+
+	// var workspace = Blockly.inject("blocklyDiv",
+	// 	{toolbox: document.getElementById("toolbox")});
+	
+	var workspace = Blockly.inject("blocklyDiv",
+		{toolbox: toolbox});
+
+	var myApplication = {};
+	myApplication.coloursFlyoutCallback = function(workspace) {
+	  // Returns an array of hex colours, e.g. ['#4286f4', '#ef0447']
+	  var colourList = ['#4286f4', '#ef0447'];
+	  var xmlList = [];
+	  if (Blockly.Blocks['colour_picker']) {
+	    for (var i = 0; i < colourList.length; i++) {
+	      var blockText = '<xml>' +
+	          '<block type="colour_picker">' +
+	          '<field name="COLOUR">' + colourList[i] + '</field>' +
+	          '</block>' +
+	          '</xml>';
+	      var block = Blockly.Xml.textToDom(blockText).firstChild;
+	      xmlList.push(block);
+	    }
+	  }
+	  return xmlList;
+	};
+
+	workspace.registerToolboxCategoryCallback(
+	  'COLOUR_PALETTE', myApplication.coloursFlyoutCallback);
+</script>
+</html>
