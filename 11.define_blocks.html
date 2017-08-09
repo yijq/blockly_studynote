@@ -14,6 +14,8 @@
 		<block type="string_length"></block>
 		<block type="math_arithmetic"></block>
 		<block type="input_block"></block>
+		<block type="input_block1"></block>
+
 	</xml>
 </body>
 <script>
@@ -54,7 +56,40 @@
 				"variable": "item2"
 			}
 		]
-	}
+	};
+
+	var inputBlock1Str = {
+		"message0": "set %1 %% %2 to %3",
+		"args0": [
+			{
+				"type": "field_variable",
+				"name": "VAR",
+				"variable": "item1"
+			},
+			{
+				"type": "field_time",
+				"name": "VALUE",
+				"alt":
+       					 {
+       					   "type": "field_input",
+       					   "name": "TEMPOTEXT",
+       					   "text": "9:00"
+       					 }
+			},
+			{
+				"type": "input_statement",
+				"name": "VAR",
+			}
+		]
+	};
+
+	Blockly.Blocks["input_block1"] = {
+		init: function(){
+			this.jsonInit(inputBlock1Str);
+			this.setColour(100);
+		}
+	};
+
 	Blockly.Blocks["input_block"] = {
 		init: function(){
 			this.jsonInit(inputBlockStr);
