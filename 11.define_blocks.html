@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>define_blocks</title>
+	<script src="blockly_compressed.js"></script>
+	<script src="blocks_compressed.js"></script>
+	<script src="msg/js/en.js"></script>
+	<script src="javascript_compressed.js"></script>
+</head>
+<body>
+	<div id="blocklyDiv" style="width:800px;height:800px"></div>
+	<xml id="toolbox" style="display:none">
+		<block type="string_length"></block>
+		<block type="math_arithmetic"></block>
+		<block type="input_block"></block>
+	</xml>
+</body>
+<script>
+	// var strLength = {
+	//   "type": "string_length",
+	//   "message0": 'length of %1',
+	//   "args0": [
+	//     {
+	//       "type": "input_value",
+	//       "name": "VALUE",
+	//       "check": "String"
+	//     }
+	//   ],
+	//   "output": "Number",
+	//   "tooltip": "Returns number of letters in the provided text.",
+	//   "helpUrl": "http://www.w3schools.com/jsref/jsref_length_string.asp"
+	// }
+	var inputBlockStr = {
+		"message0": "set %1 %% %3 to %2",
+		"args0": [
+			{
+				"type": "field_variable",
+				"name": "VAR",
+				"variable": "item1"
+			},
+			{
+				"type": "field_time",
+				"name": "VALUE",
+				"alt": {
+					"type": "input_value",
+          			"name": "TEMPOTEXT",
+         			"text": "9:00",
+				}
+			},
+			{
+				"type": "field_input",
+				"name": "VAR",
+				"variable": "item2"
+			}
+		]
+	}
+	Blockly.Blocks["input_block"] = {
+		init: function(){
+			this.jsonInit(inputBlockStr);
+			this.setColour(50);
+			this.setNextStatement(true,"Action");
+			this.setPreviousStatement(true);
+		}
+	}
+
+	Blockly.Blocks["string_length"] = {
+		init: function(){
+			this.setNextStatement(true,"Action");
+			this.setPreviousStatement(true);
+			this.setOutput(true,"Number");
+			this.setColour(300);
+		}
+	};
+	var workspace = Blockly.inject("blocklyDiv",
+		{toolbox: document.getElementById("toolbox")});
+
+	
+</script>
+</html>
