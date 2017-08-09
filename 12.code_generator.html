@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<script src="blockly_compressed.js"></script>
+	<script src="blocks_compressed.js"></script>
+	<script src="javascript_compressed.js"></script>
+	<script src="msg/js/en.js"></script>
+</head>
+<body>
+	<div id="blocklyDiv" style="width: 800px;height: 800px">
+	</div>
+	<xml id="toolbox" style="display:none">
+		<block type="my_block"></block>
+	</xml>
+</body>
+<script>
+
+var myBlockConfig = {
+	"message0": "%1 + %2",
+	"args0": [
+		{
+			"type": "field_input",
+			"name": "VAR1",
+			"text": "item1",
+		},
+		{
+			"type": "field_input",
+			"name": "VAR2",
+			"text": "item2",
+		},
+	]
+}
+
+Blockly.Blocks["my_block"] = {
+	init: function(){
+		this.jsonInit(myBlockConfig);
+		this.setColour(120);
+		this.setOutput(true,"Number");
+	},
+	onchange: function(ev){
+		var code = Blockly.JavaScript.blockToCode(this);
+		console.log(code);
+	}
+}
+
+Blockly.JavaScript["my_block"] = function(block){
+	var item1 = +block.getFieldValue("VAR1").trim();
+	var item2 = +block.getFieldValue("VAR2").trim();
+
+	var code = item1+"+"+item2+"="+(item1+item2);
+	return code;
+};
+
+var workspace = Blockly.inject("blocklyDiv",
+		{toolbox: document.querySelector("#toolbox")});
+
+</script>
+</html>
