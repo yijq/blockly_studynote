@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>operator_precedence</title>
+    <script src="blockly_compressed.js"></script>
+    <script src="blocks_compressed.js"></script>
+    <script src="msg/js/en.js"></script>
+    <script src="javascript_compressed.js"></script>
+</head>
+
+<body>
+    <div id="blocklyDiv" style="width: 800px;height: 800px"></div>
+    <xml id="toolbox" style="display:none">
+        <block type="controls_if"></block>
+        <block type="controls_whileUntil"></block>
+        <block type="controls_for">
+    </xml>
+</body>
+<script>
+    var workspace = Blockly.inject("blockDiv", {
+        toolbox: document.querySelector("#toolbox")
+    });
+</script>
+
+</html>

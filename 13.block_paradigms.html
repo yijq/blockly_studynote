@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>block_paradigms</title>
+	<script src="blockly_compressed.js"></script>
+	<script src="blocks_compressed.js"></script>
+	<script src="msg/js/en.js"></script>
+	<script src="javascript_compressed.js"></script>
+</head>
+<body>
+	<div id="blocklyDiv" style="width: 800px;height: 800px"></div>
+	<xml id="toolbox">
+		<block type="my_block"></block>
+		<block type="mouse_click"></block>
+	</xml>
+</body>
+<script>
+	var myBlockStr = {
+		"message0": "%1 + %2",
+		"args0": [
+			{
+				"type": "field_input",
+				"name": "VAR1",
+				"text": "item1",
+			},
+			{
+				"type": "field_input",
+				"name": "VAR2",
+				"text": "item2",
+			},
+		],
+	};
+
+	var defaultBlockStr = {
+		"message0": "%1 - %2",
+		"args0": [
+			{
+				"type": "field_input",
+				"name": "VAR1",
+				"text": "item1",
+			},
+			{
+				"type": "field_input",
+				"name": "VAR2",
+				"text": "item2",
+			},
+		]
+	}
+
+	Blockly.Blocks["my_block"] = {
+		init: function(){
+			this.jsonInit(myBlockStr);
+			this.setColour(180);
+			this.setPreviousStatement(true);
+			this.setNextStatement(true);
+		},
+	};
+
+	Blockly.JavaScript["my_block"] = function(block){
+		var item1 = +block.getfieldValue("VAR1");
+		var item2 = +block.getfieldValue("VAR2");
+
+		var code = item1+" + "+item2+" = "+(item1+item2);
+		return [code,Blockly.JavaScript.ORDER_ADDITION]
+	};
+
+	Blockly.Blocks["default_block"] = {
+		init: function(){
+			this.jsonInit(defaultBlockStr);
+			this.setColour(50);
+		}
+	};
+
+	Blockly.JavaScript["default_block"] = function(block){
+		var item1 = +block.getfieldValue("VAR1");
+		var item2 = +block.getfieldValue("VAR2");
+
+		var code = item1+" - "+item2+" = "+(item1-item2);
+		return [code,Blockly.JavaScript.ORDER_ADDITION]
+	};
+
+	var mouseClickStr = {
+		"message0": "on mouse click %1",
+		"args0": [
+			{
+				"type": "input_statement",
+				"name": "STATEMENT1",
+			}
+		]
+	}
+
+	Blockly.Blocks["mouse_click"] = {
+		init: function(){
+			this.jsonInit(mouseClickStr);
+			this.setColour(100);
+		}
+	}
+
+	var workspace = Blockly.inject("blocklyDiv",
+		{toolbox: document.querySelector("#toolbox")});
+
+	var xml = '<xml><block type="default_block" deletable="false"></block></xml>';
+	Blockly.Xml.domToWorkspace(Blockly.Xml.textToDom(xml), workspace);
+	workspace.addChangeListener(Blockly.Events.disableOrphans);
+
+	var allXml = Blockly.Xml.workspaceToDom(workspace);
+	var allCode = [];
+	for (var i = 0, xml; xml = allXml[i]; i++) {
+	  var headless = new Blockly.Workspace();
+	  Blockly.Xml.domToWorkspace(xml, headless);
+	  allCode.push(Blockly.JavaScript.workspaceToCode(headless));
+	  headless.dispose();
+	}
+
+</script>
+</html>
